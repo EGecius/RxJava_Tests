@@ -27,4 +27,5 @@ public class TestSubscriberSamples {
 	public Observable<String> getDayNamesObservable() {
 		return Observable.from(getDayNames());
 	}
+
 }
