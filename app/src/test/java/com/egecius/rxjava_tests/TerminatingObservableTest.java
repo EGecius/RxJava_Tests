@@ -8,9 +8,9 @@ import java.util.List;
 import rx.observers.TestSubscriber;
 
 /**
- * Tests for {@link DaysOfTheWeekSamples}
+ * Tests for for Observable which after onNext calls terminates with either onComplete() or onError()
  */
-public class TestSubscriberSamplesTest {
+public class TerminatingObservableTest {
 
 	DaysOfTheWeekSamples samples;
 	TestSubscriber<String> subscriber;

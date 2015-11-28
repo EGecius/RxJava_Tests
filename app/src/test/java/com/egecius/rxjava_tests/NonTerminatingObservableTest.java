@@ -8,7 +8,7 @@ import rx.observers.TestSubscriber;
 /***
  * Tests for Observable which has emitted values but has not terminated
  */
-public class NotTerminatedObservableTest {
+public class NonTerminatingObservableTest {
 
 	DaysOfTheWeekSamples samples;
 	TestSubscriber<String> subscriber;
