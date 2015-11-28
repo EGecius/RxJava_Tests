@@ -8,7 +8,7 @@ import rx.Observable;
 /**
  * Returns Observable and data used in testing
  */
-public class TestSubscriberSamples {
+public class DaysOfTheWeekSamples {
 
 	public List<String> getDayNames() {
 		List<String> months = new ArrayList<>(7);

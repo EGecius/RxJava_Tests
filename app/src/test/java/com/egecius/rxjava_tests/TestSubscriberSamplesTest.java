@@ -8,16 +8,16 @@ import java.util.List;
 import rx.observers.TestSubscriber;
 
 /**
- * Tests for {@link TestSubscriberSamples}
+ * Tests for {@link DaysOfTheWeekSamples}
  */
 public class TestSubscriberSamplesTest {
 
-	TestSubscriberSamples samples;
+	DaysOfTheWeekSamples samples;
 	TestSubscriber<String> subscriber;
 
 	@Before
 	public void setup() {
-		samples = new TestSubscriberSamples();
+		samples = new DaysOfTheWeekSamples();
 		subscriber = new TestSubscriber<>();
 		samples.getDayNamesObservable().subscribe(subscriber);
 	}
