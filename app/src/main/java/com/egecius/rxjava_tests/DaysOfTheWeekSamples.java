@@ -30,7 +30,7 @@ public class DaysOfTheWeekSamples {
 	}
 
 	/** Returns observable which never calls onComplete() or onError() */
-	public Observable<String> getNotTerminatedDaysNamesObservable() {
+	public Observable<String> getNonTerminatingDaysNamesObservable() {
 
 		return Observable.create(new Observable.OnSubscribe<String>() {
 			@Override

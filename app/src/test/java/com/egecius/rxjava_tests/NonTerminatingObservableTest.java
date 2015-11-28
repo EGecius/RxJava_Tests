@@ -18,7 +18,7 @@ public class NonTerminatingObservableTest {
 		subscriber = new TestSubscriber<>();
 
 		samples = new DaysOfTheWeekSamples();
-		samples.getNotTerminatedDaysNamesObservable().subscribe(subscriber);
+		samples.getNonTerminatingDaysNamesObservable().subscribe(subscriber);
 	}
 
 	/** Since the Observable never called onError() or OnComplete() subscription is not terminated */
