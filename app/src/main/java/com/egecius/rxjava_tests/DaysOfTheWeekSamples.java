@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Returns Observable and data used in testing
@@ -26,6 +27,24 @@ public class DaysOfTheWeekSamples {
 
 	public Observable<String> getDayNamesObservable() {
 		return Observable.from(getDayNames());
+	}
+
+	/** Returns observable which never calls onComplete() or onError() */
+	public Observable<String> getNotTerminatedDaysNamesObservable() {
+
+		return Observable.create(new Observable.OnSubscribe<String>() {
+			@Override
+			public void call(Subscriber<? super String> subscriber) {
+
+				List<String> daysOfWeek = getDayNames();
+
+				for (String day : daysOfWeek) {
+					subscriber.onNext(day);
+				}
+
+				//deliberately not calling onCompete() or onError() at the end
+			}
+		});
 	}
 
 }
