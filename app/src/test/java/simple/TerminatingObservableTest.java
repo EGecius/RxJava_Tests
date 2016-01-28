@@ -5,6 +5,7 @@ import org.junit.Test;
 
 import java.util.List;
 
+import activities.DaysOfTheWeekSamples;
 import rx.observers.TestSubscriber;
 
 /**

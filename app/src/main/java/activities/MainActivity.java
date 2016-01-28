@@ -1,7 +1,9 @@
-package com.egecius.rxjava_tests;
+package activities;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.egecius.rxjava_tests.R;
 
 public class MainActivity extends AppCompatActivity {
 

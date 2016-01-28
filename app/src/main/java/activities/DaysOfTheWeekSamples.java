@@ -1,4 +1,4 @@
-package com.egecius.rxjava_tests;
+package activities;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -3,6 +3,7 @@ package com.egecius.rxjava_tests;
 import org.junit.Before;
 import org.junit.Test;
 
+import activities.DaysOfTheWeekSamples;
 import rx.observers.TestSubscriber;
 
 /***
