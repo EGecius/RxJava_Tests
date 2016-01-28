@@ -1,4 +1,4 @@
-package com.egecius.rxjava_tests;
+package rx_android;
 
 import android.support.v7.widget.SearchView;
 
