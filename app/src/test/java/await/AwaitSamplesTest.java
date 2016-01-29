@@ -7,8 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import rx.observers.TestSubscriber;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 /**
  * Single Responsibility:
  *
@@ -49,6 +47,5 @@ public class AwaitSamplesTest {
 		//THEN
 		testSubscriber.assertCompleted();
 	}
-
 
 }
