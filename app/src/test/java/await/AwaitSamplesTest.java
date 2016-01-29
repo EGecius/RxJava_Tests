@@ -22,12 +22,29 @@ public class AwaitSamplesTest {
 		samples = new AwaitSamples();
 	}
 
-	@Test
+	@Test (expected = AssertionError.class)
 	public void when_nonTerminatingObservableSubscribedTo_thenAwaitAssertionFailsAfterItExpires() {
 		//WHEN
 		samples.getNonTerminatingObservable().subscribe(testSubscriber);
 		//THEN
 		testSubscriber.awaitTerminalEvent(100, TimeUnit.MILLISECONDS);
+		testSubscriber.assertCompleted();
+	}
+
+	@Test
+	public void when_delayedObservableCalled_thenSubscriberNotCompletedIfCalledImmediately() {
+		//WHEN
+		samples.getDelayedObservable().subscribe(testSubscriber);
+		//THEN
+		testSubscriber.assertNotCompleted();
+	}
+
+	@Test
+	public void when_delayedObservableCalled_thenSubscriberCompletedIfCalledWithAwait() {
+		//WHEN
+		samples.getDelayedObservable().subscribe(testSubscriber);
+		testSubscriber.awaitTerminalEvent(100, TimeUnit.MILLISECONDS);
+		//THEN
 		testSubscriber.assertCompleted();
 	}
 

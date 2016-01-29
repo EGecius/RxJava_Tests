@@ -1,5 +1,7 @@
 package await;
 
+import java.util.concurrent.TimeUnit;
+
 import rx.Observable;
 import rx.Subscriber;
 import rx.observers.TestSubscriber;
@@ -19,4 +21,16 @@ public class AwaitSamples {
 			}
 		});
 	}
+
+	/** Returns Observable which emits after 50ms delay */
+	public Observable<String> getDelayedObservable() {
+		return Observable.create(new Observable.OnSubscribe<String>() {
+			@Override
+			public void call(Subscriber<? super String> subscriber) {
+				subscriber.onNext("Test");
+				subscriber.onCompleted();
+			}
+		}).delay(50, TimeUnit.MILLISECONDS);
+	}
+
 }
