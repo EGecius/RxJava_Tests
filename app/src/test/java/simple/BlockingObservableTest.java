@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import activities.DaysOfTheWeekSamples;
 import rx.Observable;
 import rx.observables.BlockingObservable;
 

@@ -1,4 +1,4 @@
-package activities;
+package simple;
 
 import java.util.ArrayList;
 import java.util.List;

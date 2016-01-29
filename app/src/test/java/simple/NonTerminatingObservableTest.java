@@ -3,7 +3,6 @@ package simple;
 import org.junit.Before;
 import org.junit.Test;
 
-import activities.DaysOfTheWeekSamples;
 import rx.Subscription;
 import rx.observers.TestSubscriber;
 
