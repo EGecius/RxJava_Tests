@@ -12,7 +12,7 @@ import rx.Subscriber;
  */
 class RxHelper {
 
-	/** Provides Rx Observer for SearvView events, which are either change of text or query submission  */
+	/** Provides Rx Observer for SearchView events, which are either change of text or query submission  */
 	Observable<SearchViewEvent> getObservable(SearchView view) {
 		return Observable.create(new Observable.OnSubscribe<SearchViewEvent>() {
 

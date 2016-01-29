@@ -1,4 +1,4 @@
-package com.egecius.rxjava_tests;
+package simple;
 
 import org.junit.Before;
 import org.junit.Test;
