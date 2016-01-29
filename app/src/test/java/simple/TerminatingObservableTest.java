@@ -31,6 +31,8 @@ public class TerminatingObservableTest {
 		subscriber.assertCompleted();
 		//since either onError() or onComplete() was called, nothing else to emmit. Subscriber has been unsubscribed
 		subscriber.assertUnsubscribed();
+		//assert that either onComplete or OnError called
+		subscriber.assertTerminalEvent();
 	}
 
 	@Test (expected = AssertionError.class)
