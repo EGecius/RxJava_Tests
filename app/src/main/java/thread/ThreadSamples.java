@@ -3,7 +3,7 @@ package thread;
 import rx.Observable;
 
 /**
- * Observable to perform thread-realated assertions on
+ * Observable to perform thread-related assertions on.
  */
 public class ThreadSamples {
 
