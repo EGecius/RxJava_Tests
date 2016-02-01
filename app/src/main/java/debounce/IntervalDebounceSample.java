@@ -10,12 +10,12 @@ import rx.Observable;
  */
 public class IntervalDebounceSample {
 
-	public static final int INTERVAL_PERIOD = 400;
-	public static final int DEBOUNCE_MS = 400;
+	public static final int INTERVAL_MS = 400;
+	public static final int DEBOUNCE_MS = 200;
 
 	public Observable<Long> getObservable() {
 		return Observable
-				.interval(INTERVAL_PERIOD, TimeUnit.MILLISECONDS)
+				.interval(INTERVAL_MS, TimeUnit.MILLISECONDS)
 				.debounce(DEBOUNCE_MS, TimeUnit.MILLISECONDS);
 	}
 

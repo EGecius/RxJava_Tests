@@ -52,7 +52,7 @@ public class DebounceSampleTest {
 	}
 
 	private void waitedPassedDebounceTime() {
-		testSubscriber.awaitTerminalEvent(DebounceSample.DEBOUNCE_MS, TimeUnit.MILLISECONDS);
+		testSubscriber.awaitTerminalEvent(DebounceSample.DEBOUNCE_MS + 10, TimeUnit.MILLISECONDS);
 	}
 
 	private void singleStringEmitted() {

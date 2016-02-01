@@ -14,6 +14,7 @@ import static org.assertj.core.api.Assertions.assertThat;
  * Single Responsibility:
  *
  * Tests for {@link ThreadSamples}
+ * For some reason these tests fail with NPE when run from AllTestsSuite
  */
 public class ThreadSamplesTest {
 

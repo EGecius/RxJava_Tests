@@ -40,18 +40,18 @@ public class IntervalDebounceSampleTest {
 	}
 
 	@Test
-	public void
-	when_subscribedToIntervalDebounceObservable_and_waitedPassedDebounceTime_then_singleEmissionFound() {
+	public void	when_subscribedToIntervalDebounceObservable_and_waitedPassedIntervalAndDebounceTime_then_singleEmissionFound() {
 		//WHEN
 		subscribedToIntervalDebounceObservable();
 		//AND
-		waitedPassedDebounceTime();
+		waitedPassedIntervalAndDebounceTime();
 		//THEN
 		singleEmissionFound();
 	}
 
-	private void waitedPassedDebounceTime() {
-		testSubscriber.awaitTerminalEvent(IntervalDebounceSample.DEBOUNCE_MS, TimeUnit.MILLISECONDS);
+	private void waitedPassedIntervalAndDebounceTime() {
+		int debounceMs = IntervalDebounceSample.INTERVAL_MS + IntervalDebounceSample.DEBOUNCE_MS + 10;
+		testSubscriber.awaitTerminalEvent(debounceMs, TimeUnit.MILLISECONDS);
 	}
 
 	private void singleEmissionFound() {
