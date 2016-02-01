@@ -48,6 +48,26 @@ public class IntervalDebounceSampleTest {
 		//THEN
 		singleEmissionFound();
 	}
+	@Test
+	public void
+	when_subscribedToIntervalDebounceObservable_and_waitedPassedTwiceIntervalTimeAndDebounceTime_then_twoEmissionsFound
+			() {
+		//WHEN
+		subscribedToIntervalDebounceObservable();
+		//AND
+		waitedPassedTwiceIntervalTimeAndDebounceTime();
+		//THEN
+		twoEmissionsFound();
+	}
+
+	private void twoEmissionsFound() {
+		testSubscriber.assertValueCount(2);
+	}
+
+	private void waitedPassedTwiceIntervalTimeAndDebounceTime() {
+		int debounceMs = 2 * IntervalDebounceSample.INTERVAL_MS + IntervalDebounceSample.DEBOUNCE_MS + 10;
+		testSubscriber.awaitTerminalEvent(debounceMs, TimeUnit.MILLISECONDS);
+	}
 
 	private void waitedPassedIntervalAndDebounceTime() {
 		int debounceMs = IntervalDebounceSample.INTERVAL_MS + IntervalDebounceSample.DEBOUNCE_MS + 10;
