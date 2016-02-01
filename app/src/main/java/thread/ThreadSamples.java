@@ -1,4 +1,4 @@
-package thead;
+package thread;
 
 import rx.Observable;
 

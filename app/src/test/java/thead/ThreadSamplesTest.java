@@ -6,6 +6,7 @@ import org.junit.Test;
 import rx.Observable;
 import rx.observers.TestSubscriber;
 import rx.schedulers.Schedulers;
+import thread.ThreadSamples;
 
 import static org.assertj.core.api.Assertions.assertThat;
 

@@ -7,7 +7,7 @@ import rx.functions.Func2;
 /**
  * Sample code to write test for {@link rx.Observable#combineLatest(Observable, Observable, Func2)}
  */
-public class CombineLatestSample {
+public class CombineLatestSimpleSample {
 
 
 	public Observable<Boolean> getObservable(Observable<String> email, Observable<String> password) {

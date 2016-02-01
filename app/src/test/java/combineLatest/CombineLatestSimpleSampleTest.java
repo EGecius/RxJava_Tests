@@ -9,21 +9,21 @@ import rx.subjects.PublishSubject;
 /**
  * Single Responsibility:
  *
- * Tests for {@link CombineLatestSample}
+ * Tests for {@link CombineLatestSimpleSample}
  */
-public class CombineLatestSampleTest {
+public class CombineLatestSimpleSampleTest {
 
 	public static final String VALID_EMAIL = "test@mail.com";
 	public static final String VALID_PASSWORD = "password";
 	public static final String INVALID = "inval";
-	CombineLatestSample sample;
+	CombineLatestSimpleSample sample;
 	TestSubscriber<Boolean> testSubscriber = new TestSubscriber<>();
 	PublishSubject<String> subjectEmail = PublishSubject.create();
 	PublishSubject<String> subjectPassword = PublishSubject.create();
 
 	@Before
 	public void setup() {
-		sample = new CombineLatestSample();
+		sample = new CombineLatestSimpleSample();
 	}
 
 	@Test
