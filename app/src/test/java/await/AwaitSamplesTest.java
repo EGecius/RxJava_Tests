@@ -27,25 +27,34 @@ public class AwaitSamplesTest {
 		//WHEN
 		samples.getNonTerminatingObservable().subscribe(testSubscriber);
 		//THEN
-		testSubscriber.awaitTerminalEvent(100, TimeUnit.MILLISECONDS);
+		waitedPassedDelayTime();
 		testSubscriber.assertCompleted();
 	}
 
 	@Test
 	public void when_delayedObservableCalled_thenSubscriberNotCompletedIfCalledImmediately() {
 		//WHEN
-		samples.getDelayedObservable().subscribe(testSubscriber);
+		observableSubscribedTo();
 		//THEN
 		testSubscriber.assertNotCompleted();
 	}
 
 	@Test
-	public void when_delayedObservableCalled_thenSubscriberCompletedIfCalledWithAwait() {
+	public void when_observableSubscribedTo_and_waitedPassedDelayTime_then_subscriberCompleted() {
 		//WHEN
-		samples.getDelayedObservable().subscribe(testSubscriber);
-		testSubscriber.awaitTerminalEvent(100, TimeUnit.MILLISECONDS);
+		observableSubscribedTo();
+		//AND
+		waitedPassedDelayTime();
 		//THEN
 		testSubscriber.assertCompleted();
+	}
+
+	private void observableSubscribedTo() {
+		samples.getDelayedObservable().subscribe(testSubscriber);
+	}
+
+	private void waitedPassedDelayTime() {
+		testSubscriber.awaitTerminalEvent(AwaitSamples.DELAY_MS + 10, TimeUnit.MILLISECONDS);
 	}
 
 }

@@ -11,6 +11,8 @@ import rx.observers.TestSubscriber;
  */
 public class AwaitSamples {
 
+	public static final int DELAY_MS = 50;
+
 	/** Returns Observable which does not call either onComplete or onError */
 	public Observable<String> getNonTerminatingObservable() {
 		return Observable.create(new Observable.OnSubscribe<String>() {
@@ -30,7 +32,7 @@ public class AwaitSamples {
 				subscriber.onNext("Test");
 				subscriber.onCompleted();
 			}
-		}).delay(50, TimeUnit.MILLISECONDS);
+		}).delay(DELAY_MS, TimeUnit.MILLISECONDS);
 	}
 
 }
