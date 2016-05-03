@@ -77,6 +77,10 @@ public class DataModelTest {
 		when(restService.getProfile(TOKEN)).thenReturn(profileObservableSuccess);
 	}
 
+	private void profileResponseFailure() {
+		when(restService.getProfile(TOKEN)).thenReturn(profileObservableResponseFailure);
+	}
+
 	private void profileError() {
 		when(restService.getProfile(any())).thenReturn(profileObservableError);
 	}
@@ -97,10 +101,20 @@ public class DataModelTest {
 		assertThat(emissions.isEmpty()).isTrue();
 	}
 
+	private void emissionReceived(final Object expectedEmission) {
+		List<ProfileResponse> emissions = testSubscriber.getOnNextEvents();
+		assertThat(emissions.size()).isEqualTo(1);
+		assertThat(emissions.get(0)).isEqualTo(expectedEmission);
+	}
+
 	private void errorReceived(final Exception expected) {
 		List<Throwable> errors = testSubscriber.getOnErrorEvents();
 		assertThat(errors.size()).isEqualTo(1);
 		assertThat(errors.get(0)).isEqualTo(expected);
+	}
+
+	private void noErrorsReceived() {
+		 testSubscriber.assertNoErrors();
 	}
 
 	private void userProfileDataSaved() {
@@ -156,10 +170,21 @@ public class DataModelTest {
 		userProfileDataSaved();
 	}
 
-
 	/* 4 ) login is success but profile is response failure  */
 
-
+	@Test
+	public void
+	when_loginSuccess_and_profileResponseFailure_then_NoEmissionsReceived_and_errorReceived_and_userProfileDataSaved
+			() {
+		//WHEN
+		loginResponseSuccess();
+		profileResponseFailure();
+		subscribesToProfileObservable();
+		//THEN
+		emissionReceived(profileResponseFailure);
+		noErrorsReceived();
+		userProfileDataSaved();
+	}
 
 	/* 5) both responses are success */
 
