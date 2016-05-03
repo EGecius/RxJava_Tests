@@ -199,6 +199,4 @@ public class DataModelTest {
 		userProfileDataSaved();
 	}
 
-
-	// TODO: 03/05/2016 test for error scenarios - all combinations
 }
