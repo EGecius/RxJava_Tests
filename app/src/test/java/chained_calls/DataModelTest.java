@@ -12,6 +12,8 @@ import rx.Observable;
 import rx.observers.TestSubscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -39,31 +41,30 @@ public class DataModelTest {
 
 	TestSubscriber<ProfileResponse> testSubscriber = new TestSubscriber<>();
 
-	private Observable<LoginResponse> loginObservable = Observable.just(loginResponseSuccess);
-	private Observable<ProfileResponse> profileObservable = Observable.just(profileResponseSuccess);
+	private Observable<LoginResponse> loginObservableSuccess = Observable.just(loginResponseSuccess);
+	private final Exception loginException = new Exception();
+	private Observable<LoginResponse> loginObservableError = Observable.error(loginException);
+	private Observable<ProfileResponse> profileObservableSuccess = Observable.just(profileResponseSuccess);
+	private Observable<ProfileResponse> profileObservableError = Observable.error(new Exception());
 
 	@Before
 	public void setup() {
 		model = new DataModel(restService, accountController);
 	}
-
-	@Test
-	public void when_both_responsesSuccess_then_expectedEmissionsReceived_and_userProfileDataSaved() {
-		//WHEN
-		loginResponseSuccess();
-		profileResponseSuccess();
-		subscribesToProfileObservable();
-		//THEN
-		expectedEmissionsReceived();
-		userProfileDataSaved();
-	}
-
 	private void loginResponseSuccess() {
-		when(restService.login(EMAIL, PASSWORD)).thenReturn(loginObservable);
+		when(restService.login(EMAIL, PASSWORD)).thenReturn(loginObservableSuccess);
 	}
 
 	private void profileResponseSuccess() {
-		when(restService.getProfile(TOKEN)).thenReturn(profileObservable);
+		when(restService.getProfile(TOKEN)).thenReturn(profileObservableSuccess);
+	}
+
+	private void loginError() {
+		when(restService.login(any(), any())).thenReturn(loginObservableError);
+	}
+
+	private void profileError() {
+		when(restService.getProfile(any())).thenReturn(profileObservableError);
 	}
 
 	private void subscribesToProfileObservable() {
@@ -77,9 +78,55 @@ public class DataModelTest {
 		assertThat(emissions.get(0)).isEqualTo(profileResponseSuccess);
 	}
 
+	private void noEmissionsReceived() {
+		List<ProfileResponse> emissions = testSubscriber.getOnNextEvents();
+		assertThat(emissions.isEmpty()).isTrue();
+	}
+
+	private void errorReceived(final Exception excpected) {
+		List<Throwable> errors = testSubscriber.getOnErrorEvents();
+		assertThat(errors.size()).isEqualTo(1);
+		assertThat(errors.get(0)).isEqualTo(excpected);
+	}
+
 	private void userProfileDataSaved() {
 		verify(accountController).saveCredentials(EMAIL, TOKEN);
 	}
 
-	// TODO: 03/05/2016 test for error scenarious - all combinations
+	private void noUserProfileDataSave() {
+		verify(accountController, times(0)).saveCredentials(any(), any());
+	}
+
+
+
+	/* 1) both responses are success */
+
+	@Test
+	public void when_both_responsesSuccess_then_expectedEmissionsReceived_and_userProfileDataSaved() {
+		//WHEN
+		loginResponseSuccess();
+		profileResponseSuccess();
+		subscribesToProfileObservable();
+		//THEN
+		expectedEmissionsReceived();
+		userProfileDataSaved();
+	}
+
+		/* 2 ) both responses are error*/
+
+	@Test
+	public void when_bothAreErrors_then_NoEmissionsReceived_and_noUserProfileDataSaved() {
+		//WHEN
+		loginError();
+		profileError();
+		subscribesToProfileObservable();
+		//THEN
+		noEmissionsReceived();
+		errorReceived(loginException);
+		noUserProfileDataSave();
+	}
+
+
+
+	// TODO: 03/05/2016 test for error scenarios - all combinations
 }
