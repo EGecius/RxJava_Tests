@@ -32,6 +32,11 @@ public class DataModelTest {
 	@Mock AccountController accountController;
 
 	@Mock DataModelInterface.Callback<ProfileResponse> callback;
+
+	private final Exception loginBackendException = new Exception("backend");
+	private final IllegalAccessException illegalAccessException = new IllegalAccessException();
+	private final Exception profileException = new Exception("profile");
+
 	private ProfileResponse profileResponseSuccess = new ProfileResponse(true);
 	private ProfileResponse profileResponseFailure = new ProfileResponse(false);
 
@@ -42,25 +47,34 @@ public class DataModelTest {
 	TestSubscriber<ProfileResponse> testSubscriber = new TestSubscriber<>();
 
 	private Observable<LoginResponse> loginObservableSuccess = Observable.just(loginResponseSuccess);
-	private final Exception loginException = new Exception();
-	private Observable<LoginResponse> loginObservableError = Observable.error(loginException);
+	private Observable<LoginResponse> loginObservableResponseFailure = Observable.just(loginResponseFailure);
+	private Observable<LoginResponse> loginObservableError = Observable.error(loginBackendException);
+
 	private Observable<ProfileResponse> profileObservableSuccess = Observable.just(profileResponseSuccess);
-	private Observable<ProfileResponse> profileObservableError = Observable.error(new Exception());
+	private Observable<ProfileResponse> profileObservableResponseFailure = Observable.just(profileResponseFailure);
+	private Observable<ProfileResponse> profileObservableError = Observable.error(profileException);
 
 	@Before
 	public void setup() {
 		model = new DataModel(restService, accountController);
+		when(restService.getProfile(/* token */ null)).thenReturn(Observable.error(illegalAccessException));
 	}
+
 	private void loginResponseSuccess() {
 		when(restService.login(EMAIL, PASSWORD)).thenReturn(loginObservableSuccess);
 	}
 
-	private void profileResponseSuccess() {
-		when(restService.getProfile(TOKEN)).thenReturn(profileObservableSuccess);
+	private void loginResponseFailure() {
+		when(restService.login(EMAIL, PASSWORD)).thenReturn(loginObservableResponseFailure);
 	}
 
 	private void loginError() {
 		when(restService.login(any(), any())).thenReturn(loginObservableError);
+	}
+
+
+	private void profileResponseSuccess() {
+		when(restService.getProfile(TOKEN)).thenReturn(profileObservableSuccess);
 	}
 
 	private void profileError() {
@@ -83,10 +97,10 @@ public class DataModelTest {
 		assertThat(emissions.isEmpty()).isTrue();
 	}
 
-	private void errorReceived(final Exception excpected) {
+	private void errorReceived(final Exception expected) {
 		List<Throwable> errors = testSubscriber.getOnErrorEvents();
 		assertThat(errors.size()).isEqualTo(1);
-		assertThat(errors.get(0)).isEqualTo(excpected);
+		assertThat(errors.get(0)).isEqualTo(expected);
 	}
 
 	private void userProfileDataSaved() {
@@ -99,7 +113,55 @@ public class DataModelTest {
 
 
 
-	/* 1) both responses are success */
+
+	/* 1 ) login is error */
+
+	@Test
+	public void when_bothAreErrors_then_NoEmissionsReceived_and_noUserProfileDataSaved() {
+		//WHEN
+		loginError();
+		subscribesToProfileObservable();
+		//THEN
+		noEmissionsReceived();
+		errorReceived(loginBackendException);
+		noUserProfileDataSave();
+	}
+
+
+	/* 2 ) login is response failure */
+
+	@Test
+	public void when_loginResponseFailure_then_NoEmissionsReceived_and_noUserProfileDataSaved() {
+		//WHEN
+		loginResponseFailure();
+		subscribesToProfileObservable();
+		//THEN
+		noEmissionsReceived();
+		errorReceived(illegalAccessException);
+		noUserProfileDataSave();
+	}
+
+	/* 3 ) login is success but profile is error  */
+
+	@Test
+	public void when_loginSuccess_and_profileError_then_NoEmissionsReceived_and_errorReceived_and_userProfileDataSaved
+			() {
+		//WHEN
+		loginResponseSuccess();
+		profileError();
+		subscribesToProfileObservable();
+		//THEN
+		noEmissionsReceived();
+		errorReceived(profileException);
+		userProfileDataSaved();
+	}
+
+
+	/* 4 ) login is success but profile is response failure  */
+
+
+
+	/* 5) both responses are success */
 
 	@Test
 	public void when_both_responsesSuccess_then_expectedEmissionsReceived_and_userProfileDataSaved() {
@@ -111,21 +173,6 @@ public class DataModelTest {
 		expectedEmissionsReceived();
 		userProfileDataSaved();
 	}
-
-		/* 2 ) both responses are error*/
-
-	@Test
-	public void when_bothAreErrors_then_NoEmissionsReceived_and_noUserProfileDataSaved() {
-		//WHEN
-		loginError();
-		profileError();
-		subscribesToProfileObservable();
-		//THEN
-		noEmissionsReceived();
-		errorReceived(loginException);
-		noUserProfileDataSave();
-	}
-
 
 
 	// TODO: 03/05/2016 test for error scenarios - all combinations

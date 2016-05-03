@@ -40,12 +40,14 @@ final class DataModel implements DataModelInterface {
 	Observable<ProfileResponse> getProfileObservable(final String email, final String password) {
 		return restService.login(email, password)
 				.flatMap(loginResponse -> {
-					saveCredentials(email, loginResponse.token);
+					saveCredentialsIfValid(email, loginResponse.token);
 					return restService.getProfile(loginResponse.token);
 				});
 	}
 
-	private void saveCredentials(final String email, final String token) {
-		accountController.saveCredentials(email, token);
+	private void saveCredentialsIfValid(final String email, final String token) {
+		if (email != null && token != null) {
+			accountController.saveCredentials(email, token);
+		}
 	}
 }
