@@ -32,9 +32,9 @@ public class AwaitSamplesTest {
 	}
 
 	@Test
-	public void when_delayedObservableCalled_thenSubscriberNotCompletedIfCalledImmediately() {
+	public void when_delayedObservableSubscribedTo_thenSubscriberNotCompletedIfCalledImmediately() {
 		//WHEN
-		observableSubscribedTo();
+		delayedObservableSubscribedTo();
 		//THEN
 		testSubscriber.assertNotCompleted();
 	}
@@ -42,14 +42,14 @@ public class AwaitSamplesTest {
 	@Test
 	public void when_observableSubscribedTo_and_waitedPassedDelayTime_then_subscriberCompleted() {
 		//WHEN
-		observableSubscribedTo();
+		delayedObservableSubscribedTo();
 		//AND
 		waitedPassedDelayTime();
 		//THEN
 		testSubscriber.assertCompleted();
 	}
 
-	private void observableSubscribedTo() {
+	private void delayedObservableSubscribedTo() {
 		samples.getDelayedObservable().subscribe(testSubscriber);
 	}
 
