@@ -1,8 +1,6 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import accumulate_calls.BufferSamplesTest;
-import await.AwaitSamplesTest;
 import combineLatest.CombineLatestSimpleSampleTest;
 import debounce.DebounceSampleTest;
 import debounce.IntervalDebounceSampleTest;
@@ -19,7 +17,7 @@ import zip.ZipSamplesTest;
  */
 @RunWith (Suite.class)
 @Suite.SuiteClasses({
-		AwaitSamplesTest.class,
+		DelaySamplesTest.class,
 		BlockingObservableTest.class,
 		BufferSamplesTest.class,
 		CombineLatestSimpleSampleTest.class,

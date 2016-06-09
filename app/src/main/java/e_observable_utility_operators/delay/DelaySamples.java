@@ -1,4 +1,4 @@
-package await;
+package e_observable_utility_operators.delay;
 
 import java.util.concurrent.TimeUnit;
 
@@ -9,7 +9,7 @@ import rx.observers.TestSubscriber;
 /**
  * Sample code to perform {@link TestSubscriber} await assertions on.
  */
-public class AwaitSamples {
+class DelaySamples {
 
 	public static final int DELAY_MS = 50;
 

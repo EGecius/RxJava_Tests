@@ -1,4 +1,4 @@
-package accumulate_calls;
+package b_transforming_observables.buffer;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -11,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 import rx.observers.TestSubscriber;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 /**
  * Single Responsibility:
@@ -30,7 +29,7 @@ public class BufferSamplesTest {
 	}
 
 	@Test
-		 public void when_bufferObservableSubscribedTo_and_weWaitPassedBufferedTime_then_singleListEmittedWithExpectedValues
+	public void when_bufferObservableSubscribedTo_and_weWaitPassedBufferedTime_then_singleListEmittedWithExpectedValues
 			() {
 		//WHEN
 		bufferObservableSubscribedTo();

@@ -1,4 +1,4 @@
-package accumulate_calls;
+package b_transforming_observables.buffer;
 
 import java.util.Arrays;
 import java.util.List;
@@ -10,7 +10,7 @@ import rx.Subscriber;
 /**
  * Demos how to user Observable.buffer
  */
-public class BufferSamples {
+class BufferSamples {
 
 	public static final int BUFFER_MS = 100;
 

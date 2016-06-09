@@ -1,4 +1,4 @@
-package await;
+package e_observable_utility_operators.delay;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -7,19 +7,14 @@ import java.util.concurrent.TimeUnit;
 
 import rx.observers.TestSubscriber;
 
-/**
- * Single Responsibility:
- *
- * Tests for {@link AwaitSamples}
- */
-public class AwaitSamplesTest {
+public class DelaySamplesTest {
 
-	AwaitSamples samples;
+	DelaySamples samples;
 	TestSubscriber<String> testSubscriber = new TestSubscriber<>();
 
 	@Before
 	public void setup() {
-		samples = new AwaitSamples();
+		samples = new DelaySamples();
 	}
 
 	@Test (expected = AssertionError.class)
@@ -54,7 +49,7 @@ public class AwaitSamplesTest {
 	}
 
 	private void waitedPassedDelayTime() {
-		testSubscriber.awaitTerminalEvent(AwaitSamples.DELAY_MS + 10, TimeUnit.MILLISECONDS);
+		testSubscriber.awaitTerminalEvent(DelaySamples.DELAY_MS + 10, TimeUnit.MILLISECONDS);
 	}
 
 }
