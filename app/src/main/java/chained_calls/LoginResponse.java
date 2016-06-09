@@ -2,13 +2,18 @@ package chained_calls;
 
 import android.support.annotation.Nullable;
 
-final class LoginResponse {
+final class LoginResponse extends Response {
 
-	@Nullable public final String token;
-	public final boolean success;
+	public final int token;
 
-	public LoginResponse(@Nullable final String token, final boolean success) {
+	public LoginResponse(final int token) {
+		super();
 		this.token = token;
-		this.success = success;
 	}
+
+	public LoginResponse(@Nullable final String errorMsg) {
+		super(errorMsg);
+		this.token = -1;
+	}
+
 }

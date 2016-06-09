@@ -5,5 +5,5 @@ package chained_calls;
  */
 interface AccountController {
 
-	void saveCredentials(String email, String token);
+	void saveCredentials(String email, int token);
 }

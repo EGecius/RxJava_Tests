@@ -17,5 +17,5 @@ interface DataModelInterface {
 		void onFailure(@Nullable Throwable t);
 	}
 
-	void loginWithProfileFetch(String email, String password, Callback<ProfileResponse> callback);
+	void loginWithProfileFetch(String email, String password, Callback<LoginResponse> callback);
 }

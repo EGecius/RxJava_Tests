@@ -1,4 +1,4 @@
-package defer;
+package a_creating_observables.defer;
 
 import rx.Observable;
 import rx.functions.Func0;

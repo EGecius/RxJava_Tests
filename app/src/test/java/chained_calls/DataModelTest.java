@@ -25,7 +25,8 @@ public class DataModelTest {
 
 	public static final String EMAIL = "email";
 	public static final String PASSWORD = "password";
-	public static final String TOKEN = "token";
+	public static final int TOKEN = 123;
+	public static final String ERROR_MSG = "error_msg";
 	DataModel model;
 
 	@Mock RestService restService;
@@ -33,18 +34,20 @@ public class DataModelTest {
 
 	@Mock DataModelInterface.Callback<ProfileResponse> callback;
 
-	private final Exception loginBackendException = new Exception("backend");
-	private final IllegalAccessException illegalAccessException = new IllegalAccessException();
-	private final Exception profileException = new Exception("profile");
 
 	private ProfileResponse profileResponseSuccess = new ProfileResponse(true);
 	private ProfileResponse profileResponseFailure = new ProfileResponse(false);
 
+	private final Exception loginBackendException = new Exception("backend");
+	private final IllegalAccessException illegalAccessException = new IllegalAccessException();
+	private final Exception profileException = new Exception("profile");
+	private final RxChainingException rxChainingException = new RxChainingException(profileResponseFailure);
 
-	private LoginResponse loginResponseSuccess = new LoginResponse(TOKEN, true);
-	private LoginResponse loginResponseFailure = new LoginResponse(null, false);
 
-	TestSubscriber<ProfileResponse> testSubscriber = new TestSubscriber<>();
+	private LoginResponse loginResponseSuccess = new LoginResponse(TOKEN);
+	private LoginResponse loginResponseFailure = new LoginResponse(ERROR_MSG);
+
+	TestSubscriber<LoginResponse> testSubscriber = new TestSubscriber<>();
 
 	private Observable<LoginResponse> loginObservableSuccess = Observable.just(loginResponseSuccess);
 	private Observable<LoginResponse> loginObservableResponseFailure = Observable.just(loginResponseFailure);
@@ -57,7 +60,7 @@ public class DataModelTest {
 	@Before
 	public void setup() {
 		model = new DataModel(restService, accountController);
-		when(restService.getProfile(/* token */ null)).thenReturn(Observable.error(illegalAccessException));
+		when(restService.getProfile(/* token */ -1)).thenReturn(Observable.error(illegalAccessException));
 	}
 
 	private void loginResponseSuccess() {
@@ -90,19 +93,19 @@ public class DataModelTest {
 	}
 
 	private void expectedEmissionsReceived() {
-		List<ProfileResponse> emissions = testSubscriber.getOnNextEvents();
+		List<LoginResponse> emissions = testSubscriber.getOnNextEvents();
 
 		assertThat(emissions.size()).isEqualTo(1);
 		assertThat(emissions.get(0)).isEqualTo(profileResponseSuccess);
 	}
 
 	private void noEmissionsReceived() {
-		List<ProfileResponse> emissions = testSubscriber.getOnNextEvents();
+		List<LoginResponse> emissions = testSubscriber.getOnNextEvents();
 		assertThat(emissions.isEmpty()).isTrue();
 	}
 
 	private void emissionReceived(final Object expectedEmission) {
-		List<ProfileResponse> emissions = testSubscriber.getOnNextEvents();
+		List<LoginResponse> emissions = testSubscriber.getOnNextEvents();
 		assertThat(emissions.size()).isEqualTo(1);
 		assertThat(emissions.get(0)).isEqualTo(expectedEmission);
 	}
@@ -124,7 +127,6 @@ public class DataModelTest {
 	private void noUserProfileDataSave() {
 		verify(accountController, times(0)).saveCredentials(any(), any());
 	}
-
 
 
 
@@ -181,8 +183,8 @@ public class DataModelTest {
 		profileResponseFailure();
 		subscribesToProfileObservable();
 		//THEN
-		emissionReceived(profileResponseFailure);
-		noErrorsReceived();
+		noEmissionsReceived();
+		errorReceived(rxChainingException);
 		userProfileDataSaved();
 	}
 

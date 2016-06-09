@@ -1,4 +1,4 @@
-package defer;
+package a_creating_observables.defer;
 
 import org.junit.Before;
 import org.junit.Test;

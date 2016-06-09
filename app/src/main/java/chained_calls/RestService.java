@@ -11,5 +11,5 @@ interface RestService {
 	Observable<LoginResponse> login(String email, String password);
 
 	/** Fetches user's profile data */
-	Observable<ProfileResponse> getProfile(String token);
+	Observable<ProfileResponse> getProfile(int token);
 }
