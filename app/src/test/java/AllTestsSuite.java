@@ -1,16 +1,18 @@
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-import combineLatest.CombineLatestSimpleSampleTest;
-import debounce.DebounceSampleTest;
-import debounce.IntervalDebounceSampleTest;
-import error.ErrorSamplesTest;
-import form_validation.FormValidationPresenterTest;
-import rx_android.RxHelperTest;
-import simple.BlockingObservableTest;
-import simple.NonTerminatingObservableTest;
-import simple.TerminatingObservableTest;
-import zip.ZipSamplesTest;
+import a_creating_observables.create.BlockingObservableTest;
+import a_creating_observables.create.NonTerminatingObservableTest;
+import a_creating_observables.create.TerminatingObservableTest;
+import b_transforming_observables.buffer.BufferSamplesTest;
+import c_combining_observables.combineLatest.CombineLatestSimpleSampleTest;
+import c_combining_observables.zip.ZipSamplesTest;
+import c_filtering_observables.debounce.DebounceSampleTest;
+import c_filtering_observables.debounce.IntervalDebounceSampleTest;
+import e_observable_utility_operators.delay.DelaySamplesTest;
+import x_terminating.error.ErrorSamplesTest;
+import y_use_cases.form_validation.FormValidationPresenterTest;
+import z_various.rx_android.RxHelperTest;
 
 /**
  * Runs all unit tests
