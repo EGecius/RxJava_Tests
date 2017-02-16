@@ -3,6 +3,8 @@ package a_creating_observables.defer;
 import org.junit.Before;
 import org.junit.Test;
 
+import rx.Observable;
+
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
@@ -29,11 +31,18 @@ public class DeferSampleTest {
 	}
 
 	@Test
-	public void when_getObservableCalledWithDefer_then_methodInJustNotExecutedImmediately() {
+	public void when_getObservableCalledWithDefer_then_methodInJustIsExecutedOnlyOnSubscription() {
 		//WHEN
-		sample.getObservableWithDefer();
+		Observable<Boolean> observableWithDefer = sample.getObservableWithDefer();
 		//THEN
 		assertFalse(sample.isJustExecuted());
+
+		observableWithDefer.subscribe();
+
+		//now just should be executed
+		assertTrue(sample.isJustExecuted());
 	}
+
+	
 
 }
