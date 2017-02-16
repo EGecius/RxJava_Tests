@@ -11,7 +11,7 @@ public class CombineLatestSimpleSample {
 
 
 	public Observable<Boolean> getObservable(Observable<String> email, Observable<String> password) {
-		return Observable.combineLatest(email, password, new Func2<String, String, Boolean>() {
+		return Observable.zip(email, password, new Func2<String, String, Boolean>() {
 			@Override
 			public Boolean call(String s, String s2) {
 				return s.length() > 5 && s2.length() > 5;
