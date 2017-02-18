@@ -14,12 +14,12 @@ import rx.Observable;
 import rx.functions.Func1;
 
 /**
- * Switchmap, when receives a new value, cancels previous observable.
+ * SwitchMap, when receives a new value, cancels previous observable.
  *
  * For example, if user types in a search query 'j' and before network has returned types 'jo', then no response will
  * be returned for 'j' or all previous queries. It allows avoiding network race conditions
  * */
-public class SwitchmapActivitity extends AppCompatActivity {
+public class SwitchMapActivity extends AppCompatActivity {
 
 	Api api = new Api();
 
@@ -33,15 +33,15 @@ public class SwitchmapActivitity extends AppCompatActivity {
 		setContentView(R.layout.switchmap_activity);
 		EditText editText = (EditText) findViewById(R.id.editText);
 
-		observeWithSwitchmp(editText);
+		observeWithSwitchmap(editText);
 	}
 
-	private void observeWithSwitchmp(final EditText editText) {
+	private void observeWithSwitchmap(final EditText editText) {
 		RxTextView.textChanges(editText)
 				.switchMap(new Func1<CharSequence, Observable<Item>>() {
 					@Override
 					public Observable<Item> call(final CharSequence text) {
-						Log.i("Eg:SwitchmapActivitity:41", "call text " + text);
+						Log.i("Eg:SwitchMapActivity:41", "call text " + text);
 						return api.searchItems(text);
 					}
 				})
@@ -49,11 +49,11 @@ public class SwitchmapActivitity extends AppCompatActivity {
 	}
 
 	private void updateUI(final Item item) {
-		Log.v("Eg:SwitchmapActivitity:50", "updateUI " + item);
+		Log.v("Eg:SwitchMapActivity:50", "updateUI " + item);
 	}
 
 	private void showError(final Throwable throwable) {
-		Log.e("Eg:SwitchmapActivitity:56", "showError " + throwable);
+		Log.e("Eg:SwitchMapActivity:56", "showError " + throwable);
 	}
 
 }

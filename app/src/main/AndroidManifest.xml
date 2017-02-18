@@ -15,7 +15,7 @@
 
         </activity>
         
-        <activity android:name="b_transforming_observables.buffer.switchmap.SwitchmapActivitity">
+        <activity android:name="b_transforming_observables.buffer.switchmap.SwitchMapActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
