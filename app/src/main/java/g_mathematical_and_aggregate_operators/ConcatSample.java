@@ -27,7 +27,7 @@ public class ConcatSample {
 		return Observable.concat(empty, empty).firstOrDefault(DEFAULT);
 	}
 
-	Observable<String> testConcatMap() {
-		return Observable.concat(memory, disk, network).first();
+	Observable<String> getAllItemsFromConcatWith() {
+		return memory.concatWith(disk).concatWith(network);
 	}
 }

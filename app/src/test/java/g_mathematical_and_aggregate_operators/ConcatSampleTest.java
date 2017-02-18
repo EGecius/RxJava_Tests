@@ -66,4 +66,18 @@ public class ConcatSampleTest {
 		assertThat(onNextEvents.get(0)).isEqualTo(DEFAULT);
 	}
 
+	@Test
+	public void when_getAllItemsFromConcatWith_then_returnsAllItems() {
+		//WHEN
+		Observable<String> observable = sample.getAllItemsFromConcatWith();
+		//THEN
+		observable.subscribe(subscriber);
+		subscriber.assertNoErrors();
+		List<String> onNextEvents = subscriber.getOnNextEvents();
+		assertThat(onNextEvents.size()).isEqualTo(3);
+		assertThat(onNextEvents.get(0)).isEqualTo(FROM_MEMORY);
+		assertThat(onNextEvents.get(1)).isEqualTo(FROM_DISK);
+		assertThat(onNextEvents.get(2)).isEqualTo(FROM_NETWORK);
+	}
+
 }
