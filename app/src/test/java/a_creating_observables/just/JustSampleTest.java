@@ -10,6 +10,7 @@ import java.util.List;
 
 import rx.Observable;
 import rx.observers.TestSubscriber;
+import rx.schedulers.Schedulers;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
