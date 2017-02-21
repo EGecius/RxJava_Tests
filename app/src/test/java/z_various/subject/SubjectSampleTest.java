@@ -58,9 +58,26 @@ public class SubjectSampleTest {
 	}
 
 	@Test
-	public void evenWhenSubscribedToAfterEmission_subjectObservableEmitsLastReceivedValue2() {
+	public void evenWhenSubscribedToAfter3Emissions_subjectObservableEmitsLastReceivedValue() {
 		//WHEN
 		Observable<Integer> observable = sample.getBehaviorSubject();
+		//emit 3 values - BehaviorSubject will remember only the last one
+		sample.addEmission();
+		sample.addEmission();
+		sample.addEmission();
+		observable.subscribe(testSubscriber);
+		//THEN
+		testSubscriber.assertValue(3);
+		testSubscriber.assertNoErrors();
+		testSubscriber.assertNotCompleted();
+	}
+
+	/* Serialized Behavior subject -exactly same behavior as BehaviorSubject it wraps but thread safe */
+
+	@Test
+	public void give_serializedSubject_evenWhenSubscribedToAfterEmission_subjectObservableEmitsLastReceivedValue() {
+		//WHEN
+		Observable<Integer> observable = sample.getSerializedBehaviorSubject();
 		//emit 3 values - BehaviorSubject will remember only the last one
 		sample.addEmission();
 		sample.addEmission();
