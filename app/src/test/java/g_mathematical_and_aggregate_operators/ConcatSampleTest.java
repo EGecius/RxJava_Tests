@@ -80,4 +80,6 @@ public class ConcatSampleTest {
 		assertThat(onNextEvents.get(2)).isEqualTo(FROM_NETWORK);
 	}
 
+	/* PublishSubject */
+
 }
